@@ -14,9 +14,9 @@ function App() {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
 
     fetch(url)
-    .then(response => response.json())
-    .then(responseResult => setWeatherData(responseResult) )
-    .catch(err => console.error("API Fehler:", err))
+      .then(response => response.json())
+      .then(responseResult => setWeatherData(responseResult))
+      .catch(err => console.error("API Fehler:", err))
   }
 
   return (
@@ -30,10 +30,13 @@ function App() {
       <button onClick={fetchOpenWeatherApi}>Suchen</button>
 
       <div>
-        {weatherData && <h1>{weatherData.name}</h1>}
-        <p>{Math.round(weatherData?.main.temp)}°C</p>
-        <p>{Math.round(weatherData?.main.feels_like)}°C gefühlte Temperatur</p>
-        
+        {weatherData?.main && (
+          <>
+            <h1>{weatherData.name}</h1>
+            <p>{Math.round(weatherData.main.temp)}°C</p>
+            <p>{Math.round(weatherData.main.feels_like)}°C gefühlte Temperatur</p>
+          </>
+        )}
       </div>
     </div>
   )
