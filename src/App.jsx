@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div>
-      <div>QuickWeather</div>
+      <h1>QuickWeather</h1>
       <input
         type='text'
         placeholder='Stadtname'
