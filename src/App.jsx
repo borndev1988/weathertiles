@@ -21,12 +21,20 @@ function App() {
 
   return (
     <div>
+      <div>QuickWeather</div>
       <input
         type='text'
         placeholder='Stadtname'
         onChange={handleCityNameInput}
       />
       <button onClick={fetchOpenWeatherApi}>Suchen</button>
+
+      <div>
+        {weatherData && <h1>{weatherData.name}</h1>}
+        <p>{Math.round(weatherData?.main.temp)}°C</p>
+        <p>{Math.round(weatherData?.main.feels_like)}°C gefühlte Temperatur</p>
+        
+      </div>
     </div>
   )
 }
