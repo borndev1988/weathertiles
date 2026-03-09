@@ -5,6 +5,7 @@ import jacketIcon from './jacket.png'
 import winterJacketIcon from './winterJacket.png'
 import rainJacket from './rainJacket.png'
 import sunIcon from './sun.svg'
+import cloudsIcon from './clouds.svg'
 
 function App() {
   const [cityName, setCityName] = useState("")
@@ -23,7 +24,8 @@ function App() {
   }
 
   const weatherIcons = {
-    Clear: sunIcon
+    Clear: sunIcon,
+    Clouds: cloudsIcon
   }
 
   const fetchOpenWeatherApi = () => {
@@ -49,9 +51,12 @@ function App() {
       <div className='weather-container'>
         {weatherData?.main && (
           <>
-          <div className='tile'><img src={weatherIcons[weatherData.weather[0].main]}></img></div>
+          <div className='tile'><img onClick={() => {weatherData.weather[0].main === "Clear" && alert("Pack deine Sonnebrille ein!")}}
+          src={weatherIcons[weatherData.weather[0].main]}></img></div>
+
+
             <div className='tile'>
-              <img
+              <img 
                 src={clothingIcons[weatherData.weather[0].main]}
                 className='weather-icon'
                 alt={weatherData.weather[0].main}
@@ -71,6 +76,7 @@ function App() {
                   : `${Math.round(weatherData.main.temp)}°C`
                 }
               </p>
+              <h1>{weatherData.weather[0].main}</h1>
             </div>
             
           </>
