@@ -1,8 +1,7 @@
-
-
 import { useState } from 'react'
 import './App.css'
 import { icons, getClothingIcon } from './icons.js'
+
 function App() {
   const [cityName, setCityName] = useState("")
   const [weatherData, setWeatherData] = useState(null)
@@ -11,7 +10,6 @@ function App() {
 
   const handleCityNameInput = (e) => {
     setCityName(e.target.value)
-   
   }
 
   const weatherIcons = {
@@ -23,9 +21,8 @@ function App() {
   const fetchOpenWeatherApi = () => {
     const apiKey = "9af04edca48732aeccdff09b5b7406a3";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
-    setError(null)
-     setCityName("")
     
+    setError(null);
 
     fetch(url)
       .then(response => {
@@ -36,30 +33,34 @@ function App() {
       })
       .then(responseResult => {
         setWeatherData(responseResult);
+        setCityName(""); 
       })
       .catch(err => {
         setWeatherData(null);
         setError(err.message);
       });
-      
   }
 
   return (
-    <div>
+    <div className="main-wrapper">
       <img className='app-logo' src={icons.logo} alt="App Logo" />
-      <input
-        type='text'
-        placeholder='Stadtname'
-        value={cityName}
-        onChange={handleCityNameInput}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            fetchOpenWeatherApi();
-          }
-        }}
-      />
-      <button onClick={fetchOpenWeatherApi}>Suchen</button>
-      {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
+      
+      <div className="input-group">
+        <input
+          type='text'
+          placeholder='Stadtname'
+          value={cityName}
+          onChange={handleCityNameInput}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              fetchOpenWeatherApi();
+            }
+          }}
+        />
+        <button onClick={fetchOpenWeatherApi}>Suchen</button>
+      </div>
+
+      {error && <p className="error-msg">{error}</p>}
 
       <div className='weather-container'>
         {weatherData?.main && (
@@ -70,11 +71,12 @@ function App() {
                 src={weatherIcons[weatherData.weather[0].main]}
                 alt="Wetter"
               />
+              <p>{weatherData.weather[0].main}</p>
             </div>
 
             <div className='tile'>
               <img src={icons.wind} alt="Wind" />
-              {(weatherData.wind.speed * 3.6).toFixed(1)} km/h
+              <p>{(weatherData.wind.speed * 3.6).toFixed(1)} km/h</p>
             </div>
 
             <div className='tile'>
@@ -83,6 +85,7 @@ function App() {
                 className='weather-icon'
                 alt="Empfehlung"
               />
+              <p>Outfit</p>
             </div>
 
             <div
@@ -103,7 +106,7 @@ function App() {
           </>
         )}
       </div>
-      <p>&copy; {new Date().getFullYear()} QuickWeather</p>
+      <p className="footer-text">&copy; {new Date().getFullYear()} QuickWeather</p>
     </div>
   )
 }

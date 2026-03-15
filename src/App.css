@@ -1,82 +1,109 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.main-wrapper {
   text-align: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+input {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px 0 0 10px;
+  outline: none;
+  width: 200px;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.weather-icon {
-  width: 80px;
-  height: auto;
+button {
+  padding: 12px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .weather-container {
   display: flex;
   gap: 15px;
+  margin-top: 30px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
 }
+
 .tile {
-  background: #f0f2f5;
-  border-radius: 12px;
-  padding: 15px;
-  min-width: 120px;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  cursor: pointer; 
+  align-items: center; 
+  justify-content: center; 
+  width: 140px;
+  min-height: 140px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  opacity: 0;
+  animation: dropIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
+
 .tile:hover {
-  transform: translateY(-5px); 
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2); 
-  background-color: #e8eaed; 
-  text-size-adjust: 20px;
-
+  transform: translateY(-8px);
 }
 
-.app-logo {
-  width: 400px;
+.tile img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+
+.temp-label {
+  font-weight: bold;
   display: block;
-  margin: auto;
-  border-radius: 20px;
+  margin-bottom: 5px;
 }
+
+.temp-value {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+@keyframes dropIn {
+  0% { opacity: 0; transform: translateY(-60px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.tile:nth-child(1) { animation-delay: 0.1s; }
+.tile:nth-child(2) { animation-delay: 0.2s; }
+.tile:nth-child(3) { animation-delay: 0.3s; }
+.tile:nth-child(4) { animation-delay: 0.4s; }
+
+.error-msg { color: #e63946; font-weight: bold; margin-top: 10px; }
+.footer-text { margin-top: 40px; font-size: 0.85rem; color: #888; }
