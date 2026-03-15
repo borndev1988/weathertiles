@@ -11,6 +11,7 @@ function App() {
 
   const handleCityNameInput = (e) => {
     setCityName(e.target.value)
+   
   }
 
   const weatherIcons = {
@@ -23,6 +24,8 @@ function App() {
     const apiKey = "9af04edca48732aeccdff09b5b7406a3";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
     setError(null)
+     setCityName("")
+    
 
     fetch(url)
       .then(response => {
@@ -35,9 +38,10 @@ function App() {
         setWeatherData(responseResult);
       })
       .catch(err => {
-        setWeatherData(null); 
+        setWeatherData(null);
         setError(err.message);
       });
+      
   }
 
   return (
@@ -46,7 +50,13 @@ function App() {
       <input
         type='text'
         placeholder='Stadtname'
+        value={cityName}
         onChange={handleCityNameInput}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            fetchOpenWeatherApi();
+          }
+        }}
       />
       <button onClick={fetchOpenWeatherApi}>Suchen</button>
       {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
