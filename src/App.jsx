@@ -200,7 +200,7 @@ function App() {
         )}
       </div>
       <p className="footer-text">
-        &copy; {new Date().getFullYear()} QuickWeather
+        &copy; {new Date().getFullYear()} WeatherTiles
       </p>
     </div>
   );
