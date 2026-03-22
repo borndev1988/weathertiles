@@ -73,44 +73,45 @@ function App() {
     return "linear-gradient(135deg, rgba(0, 132, 175, 0.7) 0%, rgba(0, 191, 255, 0.5) 100%)";
   };
 
-
   const fetchWeatherByLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-      
-      setWeatherData(null);
-      setForecastData(null);
-      
-      fetch(url)
-        .then((res) => res.json())
-        .then((result) => {
-          setWeatherData(result);
-          setCityName(result.name)
-          setSearchKey((prev) => prev + 1);
-        });
-    });
-  }
-};
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+        setWeatherData(null);
+        setForecastData(null);
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((result) => {
+            setWeatherData(result);
+            setCityName(result.name);
+            setSearchKey((prev) => prev + 1);
+          });
+      });
+    }
+  };
 
   return (
     <div className="main-wrapper">
       <img className="app-logo" src={icons.logo} alt="App Logo" />
 
       <div className="input-group">
-        <input
-          type="text"
-          placeholder="Stadtname"
-          value={cityName}
-          onChange={handleCityNameInput}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") fetchOpenWeatherApi();
-          }}
-        />
-        <button onClick={fetchOpenWeatherApi}>Suchen</button>
-        <button onClick={fetchOpenWeatherApiForecast}>5 Tage</button>
-        <button onClick={fetchWeatherByLocation}>Standort</button>
+        <div className="button-group">
+          <input
+            type="text"
+            placeholder="Stadtname"
+            value={cityName}
+            onChange={handleCityNameInput}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") fetchOpenWeatherApi();
+            }}
+          />
+          <button onClick={fetchOpenWeatherApi}>Suchen</button>
+          <button onClick={fetchOpenWeatherApiForecast}>5 Tage</button>
+          <button onClick={fetchWeatherByLocation}>Standort</button>
+        </div>
       </div>
 
       {error && <p className="error-msg">{error}</p>}
@@ -173,7 +174,10 @@ function App() {
                   <div
                     key={index}
                     className="tile"
-                    style={{ background: getDynamicBg(temp), animationDelay: `${index * 0.1}s` } }>
+                    style={{
+                      background: getDynamicBg(temp),
+                      animationDelay: `${index * 0.1}s`,
+                    }}>
                     <p style={{ fontWeight: "bold" }}>
                       {new Date(item.dt * 1000).toLocaleDateString("de-DE", {
                         weekday: "short",
